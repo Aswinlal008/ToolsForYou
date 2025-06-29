@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aswin's Toolbox</title>
+  <style>
+    :root {
+      --primary-color: #0d6efd;
+      --dark-color: #212529;
+      --light-color: #f8f9fa;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      padding: 20px;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      color: #6c757d;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    /* Search Bar */
+    .search-container {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      position: relative;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: var(--border-radius);
+      border: none;
+      box-shadow: var(--box-shadow);
+      font-size: 1rem;
+      padding-left: 45px;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6c757d;
+    }
+    
+    /* Filter Controls */
+    .filter-controls {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .filter-btn {
+      padding: 10px 20px;
+      border: none;
+      background-color: white;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-weight: 500;
+      box-shadow: var(--box-shadow);
+      transition: all 0.3s ease;
+    }
+    
+    .filter-btn:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .filter-btn.active {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    /* Content Grid */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 25px;
+    }
+    
+    /* Project Cards */
+    .project-card {
+      background: white;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: transform 0.3s ease;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .project-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .project-content {
+      padding: 20px;
+    }
+    
+    .project-category {
+      display: inline-block;
+      padding: 4px 10px;
+      background-color: #e9ecef;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+    
+    .project-title {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    
+    .project-desc {
+      color: #6c757d;
+      margin-bottom: 15px;
+    }
+    
+    .project-link {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: var(--primary-color);
+      color: white;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+    
+    .project-link:hover {
+      background-color: #0b5ed7;
+    }
+    
+    /* Blog Cards */
+    .blog-card {
+      background: white;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+    }
+    
+    .blog-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .blog-content {
+      padding: 20px;
+    }
+    
+    .blog-meta {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+    
+    .blog-title {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    
+    .blog-excerpt {
+      color: #6c757d;
+      margin-bottom: 15px;
+    }
+    
+    .read-more {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .content-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+      
+      .filter-controls {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .filter-btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Tools For You Created by Aswin</h1>
+      <p class="subtitle">Explore a curated collection of developer resources, projects, and articles to enhance your skills</p>
+    </header>
+    
+    <!-- Search Bar -->
+    <div class="search-container">
+      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z" stroke="#6c757d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M22 22L20 20" stroke="#6c757d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <input type="text" class="search-input" placeholder="Search tools, projects, articles..." id="searchInput">
+    </div>
+    
+    <!-- Filter Controls -->
+    <div class="filter-controls">
+      <button class="filter-btn active" data-filter="all">Show All</button>
+      <button class="filter-btn" data-filter="AI">AI</button>
+      <button class="filter-btn" data-filter="project">Projects</button>
+      <button class="filter-btn" data-filter="resource">Resources</button>
+      <button class="filter-btn" data-filter="article">Articles</button>
+      <button class="filter-btn" data-filter="website">Website</button>
+      <button class="filter-btn" data-filter="streaming">Streaming</button>
+      <button class="filter-btn" data-filter="movies">Movies</button>
+      <button class="filter-btn" data-filter="anime">Anime</button>
+      <button class="filter-btn" data-filter="app">App</button>
+      <button class="filter-btn" data-filter="series">Series</button>
+      <button class="filter-btn" data-filter="tv">TV</button>
+      <button class="filter-btn" data-filter="pdf">PDF</button>
+      <button class="filter-btn" data-filter="image">Image</button>
+      <button class="filter-btn" data-filter="edit">Edit</button>
+      <button class="filter-btn" data-filter="video">Video</button>
+      <button class="filter-btn" data-filter="cook">Cook</button>
+      <button class="filter-btn" data-filter="design">Design</button>
+      <button class="filter-btn" data-filter="research">Research</button>
+    </div>
+    
+    <!-- Content Grid -->
+    <div class="content-grid">
+      <!-- Project Item 1 -->
+      <div class="project-card" data-category="project">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/026c9e9c-aba4-426b-961a-a4f553f03e95.png" alt="Modern web development toolbox application with colorful interface" class="project-img">
+        <div class="project-content">
+          <span class="project-category">Web Development</span>
+          <h3 class="project-title">Dev Toolbox</h3>
+          <p class="project-desc">A comprehensive collection of web development tools and utilities packed into one application</p>
+          <a href="#" class="project-link">View Project</a>
+        </div>
+      </div>
+    <!-- Project Item 1 -->
+    <div class="project-card" data-category="website AI">
+      <img src="./tools/images/Sora AI.jpg" alt="A smart all-in-one AI assistant for image creation, design, cutting edge editing tools." class="project-img">
+      <div class="project-content">
+        <span class="project-category">AI</span>
+        <span class="project-category">Website</span>
+        <h3 class="project-title">Sora AI</h3>
+        <p class="project-desc">A smart all-in-one AI assistant for image creation, design, cutting edge editing tools.</p>
+        <a href="https://sora.chatgpt.com/explore/top" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+      </div>
+    </div>
+
+    <!-- Project Item 2 -->
+    <div class="project-card" data-category="streaming tv Channels">
+      <img src="./tools/images/TVgarden.jpg" alt="Stream live channels from around the world in high quality." class="project-img">
+      <div class="project-content">
+        <span class="project-category">TV Channels</span>
+        <span class="project-category">Streaming</span>
+        <h3 class="project-title">TV GARDEN</h3>
+        <p class="project-desc">Stream live channels from around the world in high quality.</p>
+        <a href="https://tv.garden/in" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+      </div>
+    </div>
+
+    <!-- Project Item 3 -->
+    <div class="project-card" data-category="streaming anime">
+      <img src="./tools/images/kissanime.jpg" alt="Stream anime anytime, anywhere — your gateway to Japanese entertainment." class="project-img">
+      <div class="project-content">
+        <span class="project-category">Anime</span>
+        <span class="project-category">Streaming</span>
+        <h3 class="project-title">Kiss Anime</h3>
+        <p class="project-desc">Stream anime anytime, anywhere — your gateway to Japanese entertainment.</p>
+        <a href="https://kissanime.com.ru/Genre/Anime" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+      </div>
+    </div>
+
+    <!-- Project Item 4 -->
+    <div class="project-card" data-category="streaming anime">
+      <img src="./tools/images/anicrush.jpg" alt="Your ultimate anime companion — anime forever, on demand." class="project-img">
+      <div class="project-content">
+        <span class="project-category">Anime</span>
+        <span class="project-category">Streaming</span>
+        <h3 class="project-title">Anicrush</h3>
+        <p class="project-desc">Your ultimate anime companion — anime forever, on demand.</p>
+        <a href="https://anicrush.to/home" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+      </div>
+    </div>
+
+    <!-- Project Item 5 -->
+    <div class="project-card" data-category="streaming movies series">
+      <img src="./tools/images/SFlix.jpg" alt="Watch, stream, and download movies & series — all in one place." class="project-img">
+      <div class="project-content">
+        <span class="project-category">Movies Series</span>
+        <span class="project-category">Streaming</span>
+        <h3 class="project-title">SFlix</h3>
+        <p class="project-desc">Watch, stream, and download movies & series — all in one place.</p>
+        <a href="https://sflixgo.is/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+      </div>
+    </div>
+
+    <!-- Project Item 6 -->
+<div class="project-card" data-category="streaming movies series">
+  <img src="./tools/images/awafim.jpg" alt="A powerful Netflix alternative to  download movies and series." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Movies Series</span>
+    <span class="project-category">Streaming</span>
+    <h3 class="project-title">Awafim</h3>
+    <p class="project-desc">A powerful Netflix alternative to  download movies and series.</p>
+    <a href="https://www.awafim.tv/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 7 -->
+<div class="project-card" data-category="streaming app">
+  <img src="./tools/images/moviebox.svg" alt="Movies, series, anime, and live IPL scores — all in one app." class="project-img">
+  <div class="project-content">
+    <span class="project-category">App</span>
+    <span class="project-category">Streaming</span>
+    <h3 class="project-title">Moviebox</h3>
+    <p class="project-desc">Movies, series, anime, and live IPL scores — all in one app.</p>
+    <a href="https://moviebox.ng/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 8 -->
+<div class="project-card" data-category="streaming movies series">
+  <img src="./tools/images/cineby.jpg" alt="Stream your favorites with Cineby." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Movies Series</span>
+    <span class="project-category">Streaming</span>
+    <h3 class="project-title">Cineby</h3>
+    <p class="project-desc">Stream your favorites with Cineby.</p>
+    <a href="https://www.cineby.app/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 9 -->
+<div class="project-card" data-category="streaming movies series">
+  <img src="./tools/images/netmirror.jpg" alt="A sleek Netflix alternative for unlimited streaming." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Movies Series</span>
+    <span class="project-category">Streaming</span>
+    <h3 class="project-title">Netmirror</h3>
+    <p class="project-desc">A sleek Netflix alternative for unlimited streaming.</p>
+    <a href="https://netfree2.cc/home" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 10 -->
+<div class="project-card" data-category="streaming anime">
+  <img src="./tools/images/animerul.jpg" alt="Watch your favorite anime in Hindi — anytime, anywhere." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Anime</span>
+    <span class="project-category">Streaming</span>
+    <h3 class="project-title">Animerulz</h3>
+    <p class="project-desc">Watch your favorite anime in Hindi — anytime, anywhere.</p>
+    <a href="https://animerulzapp.com/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 11 -->
+<div class="project-card" data-category="website AI">
+  <img src="./tools/images/Elevenlabs.png" alt="Convert text to lifelike speech with advanced AI voices." class="project-img">
+  <div class="project-content">
+    <span class="project-category">AI</span>
+    <span class="project-category">Website</span>
+    <h3 class="project-title">Elevenlabs</h3>
+    <p class="project-desc">Convert text to lifelike speech with advanced AI voices.</p>
+    <a href="http://elevenlabs.io/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 12 -->
+<div class="project-card" data-category="website AI">
+  <img src="./tools/images/quillbot.png" alt="Paraphrase, rewrite, and enhance your writing instantly." class="project-img">
+  <div class="project-content">
+    <span class="project-category">AI</span>
+    <span class="project-category">Website</span>
+    <h3 class="project-title">Quillbot</h3>
+    <p class="project-desc">Paraphrase, rewrite, and enhance your writing instantly.</p>
+    <a href="http://quillbot.com/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 13 -->
+<div class="project-card" data-category="website AI">
+  <img src="./tools/images/chatgpt.jpg" alt="Ask anything — get smart, conversational answers instantly." class="project-img">
+  <div class="project-content">
+    <span class="project-category">AI</span>
+    <span class="project-category">Website</span>
+    <h3 class="project-title">Chatgpt /Open AI</h3>
+    <p class="project-desc">Ask anything — get smart, conversational answers instantly.</p>
+    <a href="http://chatgpt.com/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 14 -->
+<div class="project-card" data-category="website AI">
+  <img src="./tools/images/kreaai.jpg" alt="Generate and edit images or videos with creative AI." class="project-img">
+  <div class="project-content">
+    <span class="project-category">AI</span>
+    <span class="project-category">Website</span>
+    <h3 class="project-title">Krea AI</h3>
+    <p class="project-desc">Generate and edit images or videos with creative AI.</p>
+    <a href="http://krea.ai/home" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 15 -->
+<div class="project-card" data-category="website AI">
+  <img src="./tools/images/leonardoai.jpg" alt="AI-powered photo editing and image generation suite." class="project-img">
+  <div class="project-content">
+    <span class="project-category">AI</span>
+    <span class="project-category">Website</span>
+    <h3 class="project-title">Leonardo AI</h3>
+    <p class="project-desc">AI-powered photo editing and image generation suite.</p>
+    <a href="http://leonardo.ai/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 16 -->
+<div class="project-card" data-category="website AI">
+  <img src="./tools/images/autodesigner.png" alt="Edit, enhance, and redesign screenshots effortlessly with AI." class="project-img">
+  <div class="project-content">
+    <span class="project-category">AI</span>
+    <span class="project-category">Website</span>
+    <h3 class="project-title">Auto Designer</h3>
+    <p class="project-desc">Edit, enhance, and redesign screenshots effortlessly with AI.</p>
+    <a href="https://app.uizard.io/prototypes" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 17 -->
+<div class="project-card" data-category="website AI">
+  <img src="./tools/images/jibyteai.png" alt="A premium supportive AI assistant tailored for your tasks." class="project-img">
+  <div class="project-content">
+    <span class="project-category">AI</span>
+    <span class="project-category">Website</span>
+    <h3 class="project-title">Jibyte AI</h3>
+    <p class="project-desc">A premium supportive AI assistant tailored for your tasks.</p>
+    <a href="http://jibyte.com/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 18 -->
+<div class="project-card" data-category="website AI">
+  <img src="./tools/images/lumalabs.png" alt="Turn photos into stunning videos with AI magic." class="project-img">
+  <div class="project-content">
+    <span class="project-category">AI</span>
+    <span class="project-category">Website</span>
+    <h3 class="project-title">Luma AI</h3>
+    <p class="project-desc">Turn photos into stunning videos with AI magic.</p>
+    <a href="http://lumalabs.ai/dream-machine" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+ <!-- Project Item 19 -->
+<div class="project-card" data-category="website pdf edit">
+  <img src="./tools/images/sejda.png" alt="Edit, split, and merge PDFs easily online." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website PDF Edit</span>
+    <span class="project-category">Editing</span>
+    <h3 class="project-title">Sejda</h3>
+    <p class="project-desc">Edit, split, and merge PDFs easily online.</p>
+    <a href="http://sejda.com/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 20 -->
+<div class="project-card" data-category="website pdf edit">
+  <img src="./tools/images/adobe.png" alt="Industry-standard PDF editing with full features." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website PDF Edit</span>
+    <span class="project-category">Editing</span>
+    <h3 class="project-title">Adobe</h3>
+    <p class="project-desc">Industry-standard PDF editing with full features.</p>
+    <a href="http://acrobat.adobe.com/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 21 -->
+<div class="project-card" data-category="website image edit">
+  <img src="./tools/images/photopea.png" alt="A powerful browser-based Photoshop alternative." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website Image Edits</span>
+    <span class="project-category">Editing</span>
+    <h3 class="project-title">Photopea</h3>
+    <p class="project-desc">A powerful browser-based Photoshop alternative.</p>
+    <a href="http://photopea.com/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 22 -->
+<div class="project-card" data-category="edit website">
+  <img src="./tools/images/kittl.png" alt="Create logos, graphics, and illustrations with ease." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website</span>
+    <span class="project-category">Editing</span>
+    <h3 class="project-title">Kittl</h3>
+    <p class="project-desc">Create logos, graphics, and illustrations with ease.</p>
+    <a href="http://kittl.com/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 23 -->
+<div class="project-card" data-category="edit website">
+  <img src="./tools/images/creatieai.png" alt="Generate and explore creative illustrations online." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website Edits</span>
+    <span class="project-category">Editing</span>
+    <h3 class="project-title">Creatie</h3>
+    <p class="project-desc">Generate and explore creative illustrations online.</p>
+    <a href="https://creatie.ai/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 24 -->
+<div class="project-card" data-category="edit website">
+  <img src="./tools/images/plotno.png" alt="Design premium visuals like a pro — Canva-style" class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website</span>
+    <span class="project-category">Editing</span>
+    <h3 class="project-title">Plotno</h3>
+    <p class="project-desc">Design premium visuals like a pro — Canva-style</p>
+    <a href="https://studio.polotno.com/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 25 -->
+<div class="project-card" data-category="edit website">
+  <img src="./tools/images/tinywow.png" alt="All-in-one tool for PDF, media, and image editing." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website</span>
+    <span class="project-category">Editing</span>
+    <h3 class="project-title">Tinywow</h3>
+    <p class="project-desc">All-in-one tool for PDF, media, and image editing.</p>
+    <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 26 -->
+<div class="project-card" data-category="edit website pdf image video">
+  <img src="./tools/images/canva.png" alt="Edit photos, videos, and designs with ease." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website Edits PDF Image Video</span>
+    <span class="project-category">Editing</span>
+    <h3 class="project-title">Canva</h3>
+    <p class="project-desc">Edit photos, videos, and designs with ease.</p>
+    <a href="#" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+<!-- Project Item 27 -->
+<div class="project-card" data-category="website design">
+  <img src="./tools/images/darkdesign.jpg" alt="A sleek platform offering bold, modern UI/UX designs." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website Design</span>
+    <span class="project-category">Webdesign</span>
+    <h3 class="project-title">Dark Design</h3>
+    <p class="project-desc">A sleek platform offering bold, modern UI/UX designs.</p>
+    <a href="https://www.dark.design/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 28 -->
+<div class="project-card" data-category="privacy website">
+  <img src="./tools/images/tempmail.jpg" alt="Get instant, disposable email addresses to protect your privacy." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website</span>
+    <span class="project-category">Privacy</span>
+    <h3 class="project-title">Temporary Mail</h3>
+    <p class="project-desc">Get instant, disposable email addresses to protect your privacy.</p>
+    <a href="https://temp-mail.org/en/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 29 -->
+<div class="project-card" data-category="website pdf books">
+  <img src="./tools/images/pdfdrive.jpg" alt="Access millions of free eBooks in PDF format — no signup needed." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website PDF Books</span>
+    <span class="project-category">Website</span>
+    <h3 class="project-title">PDF Drive</h3>
+    <p class="project-desc">Access millions of free eBooks in PDF format — no signup needed.</p>
+    <a href="https://www.pdfdrive.com/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 30 -->
+<div class="project-card" data-category="website pdf books">
+  <img src="./tools/images/libgen.png" alt="A free digital library with millions of academic texts." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website PDF Books</span>
+    <span class="project-category">Website</span>
+    <h3 class="project-title">Library Genesis</h3>
+    <p class="project-desc">A free digital library with millions of academic texts.</p>
+    <a href="https://libgen.rs/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 31 -->
+<div class="project-card" data-category="website research">
+  <img src="./tools/images/scholar.jpg" alt="Search scholarly articles, theses, and academic publications easily." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website Research</span>
+    <span class="project-category">Website</span>
+    <h3 class="project-title">Google Scholar</h3>
+    <p class="project-desc">Search scholarly articles, theses, and academic publications easily.</p>
+    <a href="https://scholar.google.com/" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+
+<!-- Project Item 32 -->
+<div class="project-card" data-category="website cook">
+  <img src="./tools/images/supercook.jpg" alt="Find recipes based on the ingredients you already have." class="project-img">
+  <div class="project-content">
+    <span class="project-category">Website Cook</span>
+    <span class="project-category">Website</span>
+    <h3 class="project-title">Super Cook</h3>
+    <p class="project-desc">Find recipes based on the ingredients you already have.</p>
+    <a href="https://www.supercook.com/#/desktop" class="project-link" target="_blank" rel="noopener noreferrer">View</a>
+  </div>
+</div>
+     
+      <!-- Resource Item 1 -->
+      <div class="project-card" data-category="resource">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/628755cb-98f7-4705-9e62-4b1ad1b4051a.png" alt="React JS cheat sheet documentation page with code examples" class="project-img">
+        <div class="project-content">
+          <span class="project-category">React</span>
+          <h3 class="project-title">React Cheatsheet</h3>
+          <p class="project-desc">Quick reference guide for React hooks, components, and common patterns</p>
+          <a href="#" class="project-link">Download</a>
+        </div>
+      </div>
+      
+      <!-- Article Item 2 -->
+      <div class="blog-card" data-category="article">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/efafd70e-4110-40e4-82d1-5b94e7a65bd3.png" alt="CSS Grid layout examples with colorful grid items" class="blog-img">
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span>CSS</span>
+            <span>•</span>
+            <span>May 15, 2023</span>
+          </div>
+          <h3 class="blog-title">Mastering CSS Grid in 2023</h3>
+          <p class="blog-excerpt">Learn how to create complex layouts with CSS Grid using real-world examples...</p>
+          <a href="#" class="read-more">Read Article →</a>
+        </div>
+      </div>
+      
+      <!-- Project Item 3 -->
+      <div class="project-card" data-category="project">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1d584bf5-768a-4e2b-857f-3c6ca09a45dd.png" alt="API dashboard interface showing various endpoints and metrics" class="project-img">
+        <div class="project-content">
+          <span class="project-category">Full Stack</span>
+          <h3 class="project-title">API Dashboard</h3>
+          <p class="project-desc">Interactive dashboard for testing and visualizing API endpoints</p>
+          <a href="#" class="project-link">Try Demo</a>
+        </div>
+      </div>
+      
+      <!-- Resource Item 2 -->
+      <div class="project-card" data-category="resource">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5a01c783-6483-4932-87f8-3d060a2b7992.png" alt="Git version control documentation with command line examples" class="project-img">
+        <div class="project-content">
+          <span class="project-category">Git</span>
+          <h3 class="project-title">Essential Git Commands</h3>
+          <p class="project-desc">Must-know Git commands with examples for everyday workflow</p>
+          <a href="#" class="project-link">Get Guide</a>
+        </div>
+      </div>
+      
+      <!-- Article Item 2 -->
+      <div class="blog-card" data-category="article">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9df461ef-701b-49f2-a6d6-de95efeff6b0.png" alt="Website performance optimization graphs showing improvements" class="blog-img">
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span>Performance</span>
+            <span>•</span>
+            <span>June 2, 2023</span>
+          </div>
+          <h3 class="blog-title">Optimizing Web Performance</h3>
+          <p class="blog-excerpt">Practical techniques to improve your website's loading speed and responsiveness...</p>
+          <a href="#" class="read-more">Read Article →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const contentItems = document.querySelectorAll('.project-card, .blog-card');
+      const searchInput = document.getElementById('searchInput');
+
+      // Filter functionality
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Update active state
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+
+          const filterValue = button.dataset.filter;
+
+          // Filter content
+          contentItems.forEach(item => {
+            const itemCategories = item.dataset.category ? item.dataset.category.split(' ') : []; // Split categories by space
+
+            if (filterValue === 'all' || itemCategories.includes(filterValue)) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // Search functionality (remains the same)
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+
+        contentItems.forEach(item => {
+          const textContent = item.textContent.toLowerCase();
+          if (textContent.includes(searchTerm)) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+
+      // Initialize display (show all by default)
+      contentItems.forEach(item => {
+        item.style.display = 'block';
+      });
+    });
+  </script>
+</body>
+</html>
